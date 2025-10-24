@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<style>
+</style>
+</head>
+<body>
+<script>
+    const container = document.createElement("div");
+    container.className = "container";
+
+    const questionLabel = document.createElement("div");
+    questionLabel.className = "question";
+    questionLabel.textContent = "Введіть питання:";
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Наприклад: Чи буде завтра сонячно?";
+
+    const button = document.createElement("button");
+    button.textContent = "Запитати кулю";
+
+    const ball = document.createElement("div");
+    ball.className = "ball";
+    ball.textContent = "?";
+
+    container.appendChild(questionLabel);
+    container.appendChild(input);
+    container.appendChild(button);
+    container.appendChild(ball);
+    document.body.appendChild(container);
+
+    const answers = ["Так", "Ні", "Можливо"];
+
+    button.addEventListener("click", () => {
+      const question = input.value.trim();
+      if (question === "") {
+        alert("Будь ласка, введіть питання!");
+        return;
+      }
+
+      const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+      ball.textContent = randomAnswer;
+    });
+</script>
+</body>
+</html>

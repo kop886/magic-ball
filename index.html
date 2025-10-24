@@ -1,135 +1,49 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>В кого більше число</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<style>
+</style>
 </head>
 <body>
 <script>
-  const container = document.createElement("div");
-  container.className = "container";
+    const container = document.createElement("div");
+    container.className = "container";
 
-  const userBox = document.createElement("div");
-  userBox.className = "player-box";
+    const questionLabel = document.createElement("div");
+    questionLabel.className = "question";
+    questionLabel.textContent = "Введіть питання:";
 
-  const userLabel = document.createElement("div");
-  userLabel.className = "label";
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Наприклад: Чи буде завтра сонячно?";
 
-  const userScore = document.createElement("div");
-  userScore.className = "score";
-  userScore.textContent = "0";
+    const button = document.createElement("button");
+    button.textContent = "Запитати кулю";
 
-  const userNumber = document.createElement("div");
-  userNumber.className = "number";
+    const ball = document.createElement("div");
+    ball.className = "ball";
+    ball.textContent = "?";
 
-  userBox.append(userLabel, userScore, userNumber);
+    container.appendChild(questionLabel);
+    container.appendChild(input);
+    container.appendChild(button);
+    container.appendChild(ball);
+    document.body.appendChild(container);
 
-  const centerBox = document.createElement("div");
-  centerBox.className = "center-box";
+    const answers = ["Так", "Ні", "Можливо"];
 
-  const generateButton = document.createElement("button");
-  generateButton.textContent = "Generate";
-
-  const roundResult = document.createElement("div");
-  roundResult.className = "result";
-
-  centerBox.append(generateButton, roundResult);
-
-  const computerBox = document.createElement("div");
-  computerBox.className = "player-box";
-
-  const computerLabel = document.createElement("div");
-  computerLabel.className = "label";
-  computerLabel.textContent = "Computer";
-
-  const computerScore = document.createElement("div");
-  computerScore.className = "score";
-  computerScore.textContent = "0";
-
-  const computerNumber = document.createElement("div");
-  computerNumber.className = "number";
-
-  computerBox.append(computerLabel, computerScore, computerNumber);
-
-  container.append(userBox, centerBox, computerBox);
-  document.body.appendChild(container);
-
-  let playerName = prompt("Введіть ваше ім'я:");
-  if (!playerName || playerName.trim() == "") playerName = "User";
-  userLabel.textContent = playerName;
-
-  let userWins = 0;
-  let computerWins = 0;
-  let gameFinished = false;
-
-  const getRandomNumber = () => Math.floor(Math.random() * 10) + 1;
-
-  function playRound() {
-    if (gameFinished) return;
-
-    const userValue = getRandomNumber();
-    const computerValue = getRandomNumber();
-
-    userNumber.textContent = userValue;
-    computerNumber.textContent = computerValue;
-
-    if (userValue > computerValue) {
-      userWins++;
-      roundResult.textContent = `${playerName} виграв цей раунд!`;
-      roundResult.style.color = "green";
-    } else if (computerValue > userValue) {
-      computerWins++;
-      roundResult.textContent = "Комп’ютер виграв цей раунд!";
-      roundResult.style.color = "red";
-    } else {
-      roundResult.textContent = "Нічия!";
-      roundResult.style.color = "orange";
-    }
-
-    userScore.textContent = userWins;
-    computerScore.textContent = computerWins;
-
-    if (userWins == 3 || computerWins == 3) {
-      gameFinished = true;
-
-      let winner;
-      if (userWins == computerWins) {
-        winner = "Нічия!";
-      } else if (userWins > computerWins) {
-        winner = `${playerName} переміг у грі!`;
-      } else {
-        winner = "Комп’ютер переміг у грі!";
+    button.addEventListener("click", () => {
+      const question = input.value.trim();
+      if (question == "") {
+        alert("Будь ласка, введіть питання!");
+        return;
       }
 
-      setTimeout(() => {
-        alert(`Гра завершена!\n${winner}`);
-        generateButton.textContent = "Play Again";
-        generateButton.style.background = "#00cc66";
-        roundResult.textContent = "Гра завершена!";
-        roundResult.style.color = "#000";
-      }, 100);
-    }
-  }
-
-  function resetGame() {
-    userWins = 0;
-    computerWins = 0;
-    gameFinished = false;
-    userScore.textContent = "0";
-    computerScore.textContent = "0";
-    userNumber.textContent = "";
-    computerNumber.textContent = "";
-    roundResult.textContent = "";
-    generateButton.textContent = "Generate";
-    generateButton.style.background = "limegreen";
-  }
-
-  generateButton.addEventListener("click", () => {
-    if (gameFinished) resetGame();
-    else playRound();
-  });
+      const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+      ball.textContent = randomAnswer;
+    });
 </script>
 </body>
 </html>
